@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Primer on Machine Learning – Interactive Tutorial</title>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Import Chart.js for interactive plots -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <img src="hero.png" alt="Decorative abstract machine learning network" class="hero-image" />
+      <h1>Primer on Machine Learning</h1>
+      <p class="tagline">An interactive journey through the fundamentals of machine learning.</p>
+    </div>
+    <nav aria-label="Main navigation">
+      <ul class="navigation">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#tasks">Learning Tasks</a></li>
+        <li><a href="#algorithms">Algorithms</a></li>
+        <li><a href="#nn">Neural Networks</a></li>
+        <li><a href="#trends">Current Trends</a></li>
+        <li><a href="#resources">Further Reading</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Introduction -->
+    <section id="intro" tabindex="-1">
+      <h2>What is Machine Learning?</h2>
+      <p>
+        Machine learning (ML) refers to computer algorithms that learn patterns from
+        data to make predictions or decisions. Unlike traditional programming
+        where developers explicitly specify rules, ML systems automatically
+        extract relationships from examples<a href="#cite-1">[1]</a>. This
+        capability allows ML models to solve complex tasks such as image
+        recognition, speech transcription and fraud detection.
+      </p>
+    </section>
+
+    <!-- Tasks and categories -->
+    <section id="tasks" tabindex="-1">
+      <h2>Types of Learning Tasks</h2>
+      <p>
+        ML problems can be broadly grouped by how the model is trained:
+      </p>
+      <ul>
+        <li>
+          <strong>Supervised learning:</strong> models learn from labelled
+          examples where each input has an associated target. The goal is to
+          predict the correct output for new unseen inputs<a href="#cite-2">[2]</a>.
+          Supervised learning includes <em>classification</em> – predicting
+          discrete categories – and <em>regression</em> – predicting continuous
+          values<a href="#cite-3">[3]</a>.
+        </li>
+        <li>
+          <strong>Unsupervised learning:</strong> models learn the structure of
+          unlabeled data. Tasks include clustering similar items together,
+          reducing dimensionality and discovering latent features.
+        </li>
+        <li>
+          <strong>Semi‑supervised learning:</strong> combines a small amount of
+          labelled data with a large amount of unlabelled data, often used in
+          situations where labelling is expensive.
+        </li>
+        <li>
+          <strong>Reinforcement learning:</strong> an agent learns by
+          interacting with an environment and receiving feedback (rewards).
+        </li>
+      </ul>
+      <h3>Interactive: Classification vs Regression</h3>
+      <p>
+        The demo below generates a small synthetic dataset and lets you choose
+        whether the problem is classification (predicting categories) or
+        regression (predicting numbers). It shows how predictions differ.
+      </p>
+      <div class="demo-container">
+        <label for="task-select">Select task:</label>
+        <select id="task-select">
+          <option value="classification">Classification</option>
+          <option value="regression">Regression</option>
+        </select>
+        <canvas id="taskDemoCanvas" aria-label="Classification vs regression demonstration" width="400" height="300"></canvas>
+      </div>
+    </section>
+
+    <!-- Algorithm Section -->
+    <section id="algorithms" tabindex="-1">
+      <h2>Supervised Algorithms</h2>
+      <p>
+        This section summarizes common supervised algorithms, their strengths and
+        weaknesses. Use the interactive slider in the linear regression demo to
+        see how gradient descent gradually improves the model.
+      </p>
+      <h3>Linear Regression</h3>
+      <p>
+        Linear regression fits a straight line to the data by minimizing the
+        difference between predicted and actual values. It is simple and
+        interpretable<a href="#cite-4">[4]</a> but assumes a linear
+        relationship and is sensitive to outliers<a href="#cite-5">[5]</a>.
+      </p>
+      <div class="demo-container">
+        <canvas id="linRegCanvas" aria-label="Linear regression training demo" width="400" height="300"></canvas>
+        <div class="slider-container">
+          <label for="lr-slider">Learning rate:</label>
+          <input type="range" id="lr-slider" min="0.001" max="0.1" step="0.001" value="0.01" />
+          <span id="lr-value">0.01</span>
+        </div>
+        <button id="train-button">Train one step</button>
+      </div>
+      <p class="note">
+        Tip: a high learning rate speeds up learning but may overshoot the optimum,
+        while a low rate slows convergence but improves stability<a href="#cite-19">[19]</a><a href="#cite-20">[20]</a>.
+      </p>
+      <h4>Linear Discriminant Analysis (LDA)</h4>
+      <p>
+        LDA projects data onto a line to separate classes. It works well when
+        data from each class is normally distributed and shares equal
+        covariance, but its performance drops when these assumptions are
+        violated or the relationship is non‑linear<a href="#cite-6">[6]</a><a href="#cite-7">[7]</a>.
+      </p>
+      <h4>Decision Trees</h4>
+      <p>
+        Trees split the feature space into rectangular regions. They are easy to
+        interpret and require little data preprocessing<a href="#cite-8">[8]</a>, but
+        deep trees can overfit, are sensitive to small data changes and produce
+        piecewise constant predictions<a href="#cite-9">[9]</a>.
+      </p>
+      <h4>Random Forests &amp; Ensembles</h4>
+      <p>
+        Random forests build multiple trees on bootstrapped samples and average
+        their predictions. This reduces variance and makes forests more
+        accurate and less prone to overfitting than a single tree<a href="#cite-10">[10]</a>.
+        However, training many trees is computationally expensive and the
+        resulting model is less interpretable<a href="#cite-11">[11]</a><a href="#cite-12">[12]</a>.
+      </p>
+      <h4>Support Vector Machines (SVMs)</h4>
+      <p>
+        SVMs find a hyperplane that maximizes the margin between classes. They
+        handle high‑dimensional spaces well and can use kernels to model
+        complex boundaries<a href="#cite-13">[13]</a>. But SVMs require careful
+        tuning, scale poorly to large datasets and can be hard to interpret
+        <a href="#cite-14">[14]</a>.
+      </p>
+    </section>
+
+    <!-- Neural Networks -->
+    <section id="nn" tabindex="-1">
+      <h2>Neural Networks</h2>
+      <p>
+        Neural networks are layered models inspired by the brain. They consist of
+        neurons connected by weights, which are adjusted during training using
+        backpropagation<a href="#cite-15">[15]</a><a href="#cite-16">[16]</a>. A single layer
+        perceptron can only solve linearly separable problems and struggles with
+        non‑linearity and scaling<a href="#cite-18">[18]</a>. Multi‑layer networks
+        overcome this by stacking layers and using nonlinear activation
+        functions. Training relies on computing gradients and updating weights to
+        reduce error<a href="#cite-17">[17]</a>.
+      </p>
+      <h3>Learning Rate &amp; Optimization</h3>
+      <p>
+        The learning rate controls the step size during gradient descent. High
+        learning rates can overshoot the optimum and cause oscillations, while
+        low rates slow convergence but increase stability<a href="#cite-19">[19]</a>.
+        Choosing an appropriate rate is key to successful training<a href="#cite-20">[20]</a>.
+      </p>
+      <h3>Convolutional Neural Networks (CNNs)</h3>
+      <p>
+        CNNs process grid‑like data such as images using convolutional layers.
+        Each neuron connects to a small local region of the previous layer to
+        exploit spatial correlations<a href="#cite-21">[21]</a>. Weight sharing
+        drastically reduces the number of parameters and leads to translation
+        invariance<a href="#cite-22">[22]</a><a href="#cite-23">[23]</a>.
+      </p>
+      <h3>Recurrent Neural Networks (RNNs) &amp; LSTMs</h3>
+      <p>
+        RNNs handle sequences by feeding the output from one time step as input to
+        the next. Standard RNNs suffer from vanishing and exploding gradients,
+        limiting their ability to learn long‑term dependencies. Long Short‑Term
+        Memory (LSTM) networks address this using gating mechanisms that control
+        information flow<a href="#cite-24">[24]</a>.
+      </p>
+      <h3>Attention Mechanisms</h3>
+      <p>
+        Attention helps models focus on the most relevant parts of the input
+        sequence. It computes a weighted sum of hidden states based on the
+        similarity between a query and key vectors, producing a context vector
+        that guides the next prediction<a href="#cite-25">[25]</a><a href="#cite-26">[26]</a>.
+      </p>
+    </section>
+
+    <!-- Current Trends and Challenges -->
+    <section id="trends" tabindex="-1">
+      <h2>Current Trends &amp; Challenges</h2>
+      <h3>Generative Adversarial Networks (GANs)</h3>
+      <p>
+        GANs consist of a generator and a discriminator playing an adversarial
+        game: the generator tries to produce realistic data to fool the
+        discriminator, while the discriminator learns to distinguish real from
+        fake samples<a href="#cite-27">[27]</a>. Training continues until the
+        generator produces data that the discriminator cannot tell apart from
+        real data<a href="#cite-28">[28]</a>.
+      </p>
+      <h3>Model Interpretability</h3>
+      <p>
+        Model interpretability refers to understanding how a model arrives at its
+        predictions. Interpretability is crucial for trust, bias detection and
+        regulatory compliance<a href="#cite-29">[29]</a>. Techniques include
+        using simpler models, feature importance, saliency maps and surrogate
+        models.
+      </p>
+      <h3>Probability Calibration</h3>
+      <p>
+        A well‑calibrated model’s predicted probabilities reflect the true
+        likelihood of events. Calibration is important for decision making and
+        comparison of models<a href="#cite-30">[30]</a><a href="#cite-32">[32]</a>. Poor
+        calibration can arise from model type, complexity or data imbalance
+        <a href="#cite-31">[31]</a>. Methods such as Platt scaling and isotonic
+        regression adjust raw predictions to improve calibration<a href="#cite-33">[33]</a>.
+      </p>
+      <h3>Adversarial Training &amp; Robustness</h3>
+      <p>
+        Adversarial training improves model robustness by training on both clean
+        and adversarial examples. Exposing models to adversarial perturbations
+        teaches them to recognize and resist malicious inputs<a href="#cite-34">[34]</a>,
+        although it increases computational cost and can trade off accuracy
+        <a href="#cite-35">[35]</a>.
+      </p>
+    </section>
+
+    <!-- Further reading -->
+    <section id="resources" tabindex="-1">
+      <h2>Further Reading</h2>
+      <ul>
+        <li><a href="https://machinelearningmastery.com/types-of-machine-learning/" target="_blank" rel="noopener">Types of Machine Learning</a></li>
+        <li><a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">scikit‑learn documentation</a></li>
+        <li><a href="https://distill.pub/" target="_blank" rel="noopener">Distill journal</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Primer on Machine Learning. All rights reserved.</p>
+    <p>Designed by an AI assistant for educational purposes.</p>
+    <p id="footnotes-title">Sources:</p>
+    <ol class="footnotes">
+      <li id="cite-1">【356526140638220†L62-L66】</li>
+      <li id="cite-2">【759821333226569†L74-L83】</li>
+      <li id="cite-3">【377689222100†L62-L70】</li>
+      <li id="cite-4">【436905055395268†L143-L149】</li>
+      <li id="cite-5">【436905055395268†L183-L210】</li>
+      <li id="cite-6">【100341935505248†L551-L560】</li>
+      <li id="cite-7">【100341935505248†L592-L599】</li>
+      <li id="cite-8">【888092705765458†L138-L150】</li>
+      <li id="cite-9">【888092705765458†L167-L180】</li>
+      <li id="cite-10">【681143285348460†L252-L259】</li>
+      <li id="cite-11">【681143285348460†L289-L294】</li>
+      <li id="cite-12">【681143285348460†L296-L300】</li>
+      <li id="cite-13">【901562010440672†L460-L473】</li>
+      <li id="cite-14">【901562010440672†L478-L488】</li>
+      <li id="cite-15">【70928928936716†L72-L82】</li>
+      <li id="cite-16">【70928928936716†L90-L97】</li>
+      <li id="cite-17">【70928928936716†L121-L134】</li>
+      <li id="cite-18">【44218043896819†L590-L607】</li>
+      <li id="cite-19">【255720161734968†L221-L234】</li>
+      <li id="cite-20">【255720161734968†L287-L303】</li>
+      <li id="cite-21">【133328512346795†L918-L924】</li>
+      <li id="cite-22">【133328512346795†L948-L955】</li>
+      <li id="cite-23">【133328512346795†L1010-L1024】</li>
+      <li id="cite-24">【568574752325137†L282-L304】</li>
+      <li id="cite-25">【706727569903627†L94-L106】</li>
+      <li id="cite-26">【706727569903627†L120-L175】</li>
+      <li id="cite-27">【545106936837392†L382-L402】</li>
+      <li id="cite-28">【545106936837392†L448-L466】</li>
+      <li id="cite-29">【21290518725265†L116-L134】</li>
+      <li id="cite-30">【361027117800350†L41-L51】</li>
+      <li id="cite-31">【361027117800350†L69-L80】</li>
+      <li id="cite-32">【361027117800350†L97-L111】</li>
+      <li id="cite-33">【361027117800350†L114-L154】</li>
+      <li id="cite-34">【340462083117132†L67-L76】</li>
+      <li id="cite-35">【340462083117132†L114-L118】</li>
+    </ol>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
