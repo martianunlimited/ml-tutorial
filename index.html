@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primer on Machine Learning – Interactive Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- No external library is required for our custom interactive charts -->
+</head>
+<body>
+    <header>
+        <h1>Primer on Machine Learning</h1>
+        <p class="lead">An introductory guide based on the lecture by Nick Lim. This site expands on each slide with beginner‑friendly explanations, examples and interactive experiments.</p>
+    </header>
+
+    <!-- Table of contents for easy navigation -->
+    <nav id="toc">
+        <h2>Contents</h2>
+        <ul>
+            <li><a href="#slide1">1. Primer on Machine Learning</a></li>
+            <li><a href="#slide2">2. Outline</a></li>
+            <li><a href="#slide3">3. What is Machine Learning?</a></li>
+            <li><a href="#slide4">4. Machine Learning Tasks</a></li>
+            <li><a href="#slide5">5. Supervised Learning</a></li>
+            <li><a href="#slide6">6. Supervised Learning Algorithms</a></li>
+            <li><a href="#slide7">7. Overfitting vs Underfitting</a></li>
+            <li><a href="#slide8">8. Linear Regression</a></li>
+            <li><a href="#slide9">9. Linear/Quadratic Discriminant Analysis</a></li>
+            <li><a href="#slide10">10. Trees</a></li>
+            <li><a href="#slide11">11. Ensemble of Trees</a></li>
+            <li><a href="#slide12">12. Support Vector Machines</a></li>
+            <li><a href="#slide13">13. Neural Networks</a></li>
+            <li><a href="#slide14">14. Perceptron</a></li>
+            <li><a href="#slide15">15. Learning in Neural Networks</a></li>
+            <li><a href="#slide16">16. Challenges in Learning</a></li>
+            <li><a href="#slide17">17. Neural Network Variants</a></li>
+            <li><a href="#slide18">18. Convolutional Neural Networks</a></li>
+            <li><a href="#slide19">19. RNNs and LSTMs</a></li>
+            <li><a href="#slide20">20. Trends in ML</a></li>
+            <li><a href="#slide21">21. Current Trends – Explainability & Calibration</a></li>
+            <li><a href="#slide22">22. Current Trends – GANs & Attention</a></li>
+            <li><a href="#slide23">23. Additional Resources</a></li>
+            <li><a href="#slide24">24. Addendum</a></li>
+            <li><a href="#slide25">25. What is Object Detection?</a></li>
+            <li><a href="#slide26">26. Applications of Object Detection</a></li>
+            <li><a href="#slide27">27. K‑Means Clustering</a></li>
+            <li><a href="#slide28">28. The XOR Problem</a></li>
+            <li><a href="#slide29">29. Transfer Learning</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Slide 1 -->
+        <section id="slide1">
+            <h2>Primer on Machine Learning</h2>
+            <img src="slides/slide_01.png" alt="Title slide with text Primer on Machine Learning and presenter Nick Lim.">
+            <p>
+                Machine learning (ML) is a subfield of artificial intelligence that focuses on building computer programs that can learn
+                from data.  Rather than hand‑crafting every rule in a program, ML techniques look for patterns and relationships
+                within a dataset and use those patterns to make predictions or decisions on new, unseen data.  This website
+                accompanies Nick Lim’s primer on machine learning and expands on the key ideas covered in each slide.
+            </p>
+        </section>
+
+        <!-- Slide 2 -->
+        <section id="slide2">
+            <h2>Outline</h2>
+            <img src="slides/slide_02.png" alt="Outline of the talk listing Machine Learning Primer, Supervised Learning Algorithms, and Current Trends in ML.">
+            <p>
+                The lecture is structured into three parts:
+            </p>
+            <ul>
+                <li><strong>Machine Learning Primer</strong> – a quick introduction to what ML is and why it differs from traditional programming.</li>
+                <li><strong>Supervised Learning Algorithms</strong> – an overview of popular algorithms for classification and regression, including
+                    neural networks.</li>
+                <li><strong>Current Trends in ML</strong> – a look at emerging topics such as explainability, adversarial robustness and generative models.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 3 -->
+        <section id="slide3">
+            <h2>What is Machine Learning?</h2>
+            <img src="slides/slide_03.png" alt="Diagram comparing machine learning with traditional programming and a comic about machine learning.">
+            <p>
+                Traditional software development involves writing a set of explicit instructions (a program) that takes data as input
+                and produces a desired output.  In contrast, machine learning works backwards: we supply the algorithm with
+                <em>data</em> and the corresponding <em>outputs</em> (labels).  The algorithm then learns a program – often called a model – that
+                replicates the mapping from inputs to outputs.  This is why ML is sometimes referred to as “programming with data”.
+            </p>
+            <p>
+                The cartoon on the right humorously illustrates how ML can feel like stirring a pile of linear algebra until the
+                answers start looking right.  While linear algebra is indeed central to many ML algorithms, we will demystify
+                these techniques in the coming sections.
+            </p>
+            <details>
+                <summary>More on machine learning vs traditional programming</summary>
+                <p>In traditional programming we explicitly encode rules that map an input (e.g. an image) to an output (e.g. the
+                label “cat”).  This is feasible for simple tasks but quickly becomes impractical as the problem complexity grows.
+                Machine learning flips the process: by exposing an algorithm to many examples of inputs and outputs, it
+                automatically infers the underlying rules.  This allows the same approach to be applied across diverse
+                domains—from computer vision and natural language processing to medical diagnosis and financial prediction.</p>
+            </details>
+        </section>
+
+        <!-- Slide 4 -->
+        <section id="slide4">
+            <h2>Machine Learning Tasks</h2>
+            <img src="slides/slide_04.png" alt="Infographic of machine learning tasks including supervised, unsupervised, reinforcement, and semi-supervised learning.">
+            <p>
+                Machine learning encompasses a variety of learning paradigms:
+            </p>
+            <ul>
+                <li><strong>Supervised learning</strong> – models are trained with labelled examples, so they learn to predict an output label for
+                    new inputs.  Common tasks include <em>classification</em> (predicting discrete categories) and <em>regression</em>
+                    (predicting continuous values).</li>
+                <li><strong>Unsupervised learning</strong> – algorithms seek structure in unlabelled data.  Examples include
+                    <em>clustering</em>, where the goal is to group similar data points together, and
+                    <em>dimensionality reduction</em>, which projects high‑dimensional data into a lower‑dimensional space for visualisation.</li>
+                <li><strong>Semi‑supervised learning</strong> – combines a small amount of labelled data with a large amount of unlabelled data.
+                    This approach can improve performance when labelling data is expensive.</li>
+                <li><strong>Reinforcement learning</strong> – an agent learns to make sequences of decisions by interacting with an environment.
+                    The agent receives rewards or penalties and aims to maximise the cumulative reward.  Applications range from game
+                    playing to robotics.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 5 -->
+        <section id="slide5">
+            <h2>Supervised Learning</h2>
+            <img src="slides/slide_05.png" alt="Scatter plots illustrating regression and classification tasks in supervised learning.">
+            <p>
+                In supervised learning, every training example comes with a “ground truth” label.  The model uses these labelled
+                examples to learn a mapping from inputs to outputs.  There are two broad categories:
+            </p>
+            <ul>
+                <li><strong>Regression</strong> – predicting a continuous numerical value.  For instance, estimating house prices given features
+                    like size and location.  The left scatter plot shows a simple linear regression: the blue line summarises the
+                    trend through the orange data points.</li>
+                <li><strong>Classification</strong> – predicting a discrete category.  The right plot shows a binary classification problem in
+                    which a line divides red points from black points.  The goal is to find a boundary that best separates the
+                    classes.</li>
+            </ul>
+            <p>
+                The experiment below allows you to play with linear regression on a toy dataset.  Move the sliders to adjust the
+                slope and intercept of the line and observe how the mean squared error changes.
+            </p>
+            <!-- Interactive linear regression demo -->
+            <div class="demo">
+                <canvas id="regressionChart" width="600" height="350" aria-label="Interactive linear regression chart" role="img"></canvas>
+                <div class="controls">
+                    <label for="slopeSlider">Slope (m): <span id="slopeValue">1</span></label>
+                    <input type="range" id="slopeSlider" min="-3" max="3" step="0.1" value="1">
+                    <label for="interceptSlider">Intercept (b): <span id="interceptValue">0</span></label>
+                    <input type="range" id="interceptSlider" min="-5" max="5" step="0.1" value="0">
+                    <p>Mean squared error: <span id="mseValue">0.00</span></p>
+                </div>
+            </div>
+            <details>
+                <summary>Why mean squared error?</summary>
+                <p>
+                    Mean squared error (MSE) measures the average of the squared differences between the predicted and true values.
+                    Squaring the differences penalises large errors more strongly, and averaging ensures that the loss is on the
+                    same scale regardless of the number of data points.  Minimising MSE is a common objective when training
+                    regression models.
+                </p>
+            </details>
+        </section>
+
+        <!-- Slide 6 -->
+        <section id="slide6">
+            <h2>Supervised Learning Algorithms</h2>
+            <img src="slides/slide_06.png" alt="Bullet list of typical supervised learning algorithms like linear regression, discriminant analysis, CARTs, tree ensembles, SVMs, and neural networks.">
+            <p>
+                A wide variety of algorithms can be used for supervised learning.  Here are a few common ones and the types of
+                problems they address:
+            </p>
+            <ul>
+                <li><strong>Linear regression</strong> – fits a straight line (or hyperplane) through data to predict continuous values.</li>
+                <li><strong>Linear/Quadratic Discriminant Analysis</strong> – models class separation by assuming Gaussian class distributions and
+                    finding linear or curved decision boundaries.</li>
+                <li><strong>Classification and Regression Trees (CART)</strong> – splits the data into regions using a tree structure.</li>
+                <li><strong>Tree ensembles</strong> – combine multiple trees (e.g. random forests, gradient boosted trees) to improve accuracy and reduce overfitting.</li>
+                <li><strong>Support Vector Machines (SVMs)</strong> – find a boundary that maximises the margin between classes, often using kernel
+                    functions for non‑linear problems.</li>
+                <li><strong>Neural networks</strong> – highly flexible models that can approximate complex functions when provided with enough data and
+                    computational power.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 7 -->
+        <section id="slide7">
+            <h2>Overfitting vs Underfitting</h2>
+            <img src="slides/slide_07.png" alt="Illustrations showing underfitting and overfitting for regression and classification, plus a comparison table.">
+            <p>
+                When training models it is important to strike a balance between bias and variance.  An
+                <strong>underfitted</strong> model is too simple to capture the underlying structure in the data – for instance, fitting a straight
+                line through a non‑linear pattern.  Such models have high bias and perform poorly on both the training and test
+                data.
+            </p>
+            <p>
+                An <strong>overfitted</strong> model is excessively complex and captures noise rather than signal – imagine a wiggly curve that
+                passes through every training point.  While overfitted models may achieve near‑perfect accuracy on the training set,
+                they often generalise poorly to new data.  Remedies include simplifying the model, collecting more training data,
+                or using techniques such as regularisation.
+            </p>
+            <details>
+                <summary>Key differences summarised</summary>
+                <table>
+                    <thead>
+                        <tr><th></th><th>Underfitted</th><th>Overfitted</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Model complexity</td><td>Too simple</td><td>Too complex</td></tr>
+                        <tr><td>Training accuracy</td><td>Poor</td><td>High</td></tr>
+                        <tr><td>Test accuracy</td><td>Poor</td><td>Poor</td></tr>
+                        <tr><td>Typical remedy</td><td>Increase complexity / train longer</td><td>Reduce complexity / get more data</td></tr>
+                    </tbody>
+                </table>
+            </details>
+        </section>
+
+        <!-- Slide 8 -->
+        <section id="slide8">
+            <h2>Linear Regression</h2>
+            <img src="slides/slide_08.png" alt="Diagram of linear regression with line of best fit and text explaining advantages and disadvantages.">
+            <p>
+                Linear regression is one of the simplest predictive models.  It assumes a linear relationship between the input
+                variables and the target output.  By fitting a line to the data, we can make predictions for new inputs.
+            </p>
+            <p>
+                <strong>Advantages</strong>: linear regression is easy to implement, computationally efficient and provides interpretable
+                coefficients.  Because of its simplicity, it is often a good baseline model.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: the model can only capture linear relationships.  When the true relationship between inputs and
+                outputs is non‑linear, linear regression may underfit.  Moreover, the model is limited by the number of features
+                and cannot automatically discover complex interactions.
+            </p>
+        </section>
+
+        <!-- Slide 9 -->
+        <section id="slide9">
+            <h2>Linear/Quadratic Discriminant Analysis</h2>
+            <img src="slides/slide_09.png" alt="Plots showing linear and quadratic discriminant analysis with decision boundaries, and bullet text listing pros and cons.">
+            <p>
+                Discriminant analysis assumes that each class follows a Gaussian distribution.  By estimating the mean and
+                covariance of each class, the algorithm derives a boundary that separates the classes.  If the covariance is
+                assumed to be equal across classes the boundary is <em>linear</em> (LDA); if not, it becomes <em>quadratic</em> (QDA).
+            </p>
+            <p>
+                <strong>Advantages</strong>: these methods are simple, computationally efficient and produce interpretable boundaries.  They can
+                perform surprisingly well when the Gaussian assumption holds.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: model complexity is limited, and performance can degrade when class distributions are
+                non‑Gaussian or when there are many correlated features (due to unstable covariance estimates).
+            </p>
+        </section>
+
+        <!-- Slide 10 -->
+        <section id="slide10">
+            <h2>Classification and Regression Trees</h2>
+            <img src="slides/slide_10.png" alt="Decision tree diagram and explanation of advantages and disadvantages of classification and regression trees.">
+            <p>
+                Tree‑based models partition the input space by asking a sequence of yes/no questions.  Each internal node splits
+                the data based on a single feature, and the leaves contain a prediction.  For classification, the prediction is the
+                most common class in the leaf; for regression, it is the average of the target values.
+            </p>
+            <p>
+                <strong>Advantages</strong>: trees are intuitive and their depth can be controlled to manage complexity.  The rules they learn can
+                be inspected by humans, making them attractive for interpretable models.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: training a tree can be computationally intensive; slight changes in the data can lead to very
+                different trees (high variance).  Trees also struggle to model smooth, complex functions unless they become very deep,
+                which increases the risk of overfitting.
+            </p>
+        </section>
+
+        <!-- Slide 11 -->
+        <section id="slide11">
+            <h2>Ensembles of Trees</h2>
+            <img src="slides/slide_11.png" alt="Scatter plot with true function and boosted tree prediction; text describing advantages and disadvantages of tree ensembles.">
+            <p>
+                Individual trees can be unstable, but combining many trees usually yields much better results.  Two popular
+                ensemble techniques are <em>random forests</em> and <em>gradient‑boosted trees</em>.
+            </p>
+            <ul>
+                <li><strong>Random forests</strong> build many trees on bootstrap samples of the data and average their predictions.  Randomness in
+                    the feature selection decorrelates the trees, which reduces variance.</li>
+                <li><strong>Gradient boosting</strong> builds trees sequentially, with each tree correcting the errors of the previous ones.  This
+                    approach can approximate complex functions but is more prone to overfitting if not carefully regularised.</li>
+            </ul>
+            <p>
+                <strong>Advantages</strong>: ensembles can model complicated relationships beyond the capability of a single tree and usually
+                achieve strong performance out of the box.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: the resulting model is less interpretable than a single tree and may overfit without
+                proper tuning of hyper‑parameters (number of trees, depth, learning rate, etc.).
+            </p>
+        </section>
+
+        <!-- Slide 12 -->
+        <section id="slide12">
+            <h2>Support Vector Machines</h2>
+            <img src="slides/slide_12.png" alt="Visualisation of SVM margin and kernels; bullet points describing advantages and disadvantages of support vector machines.">
+            <p>
+                Support vector machines (SVMs) seek a decision boundary that maximises the margin between classes.  Only a subset
+                of training points – the <em>support vectors</em> – define this boundary.  By applying a kernel function, SVMs can learn
+                non‑linear boundaries by implicitly mapping the data into a higher‑dimensional space.
+            </p>
+            <p>
+                <strong>Advantages</strong>: SVMs often work well when you have limited domain knowledge about the data.  They handle high‑dimensional
+                spaces and can model complex boundaries through kernels.  They also tend to generalise well because the margin
+                maximisation principle controls overfitting.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: choosing an appropriate kernel and tuning hyper‑parameters can be challenging.  Training times can be
+                long for large datasets, and the resulting model is difficult to interpret.  Furthermore, the final solution only
+                depends on a subset of the training data (the support vectors), which may make evaluation relatively expensive.
+            </p>
+        </section>
+
+        <!-- Slide 13 -->
+        <section id="slide13">
+            <h2>Neural Networks</h2>
+            <img src="slides/slide_13.png" alt="Slide title for neural networks.">
+            <p>
+                Neural networks are inspired by biological brains and consist of interconnected “neurons” arranged in layers.
+                Each neuron performs a simple computation: it takes inputs, multiplies them by weights, adds a bias and passes
+                the result through a non‑linear activation function.  By stacking many such units, networks can approximate very
+                complicated functions.
+            </p>
+            <p>
+                In the following slides we will examine the basic building blocks of neural networks (the perceptron), how they
+                learn, common challenges and several architectural variants.
+            </p>
+        </section>
+
+        <!-- Slide 14 -->
+        <section id="slide14">
+            <h2>Perceptron</h2>
+            <img src="slides/slide_14.png" alt="Diagram of a perceptron and its mathematical formula.">
+            <p>
+                The perceptron is the fundamental unit of a neural network.  It receives multiple inputs (x₁, x₂, …, xₘ), each
+                weighted by a parameter wᵢ.  The weighted inputs are summed together with a bias term and then passed through an
+                activation function.  A common activation is the sigmoid function, which squeezes the input into the range (0, 1).
+                Mathematically this can be written as:
+            </p>
+            <p class="formula">v = b + \(\sum_{i=1}^{m} w_i x_i\),    y = \(\phi(v)\) = \(\frac{1}{1 + e^{-v}}\)</p>
+            <p>
+                By connecting perceptrons in layers, the outputs of one layer become the inputs to the next.  This simple idea
+                underlies deep learning.
+            </p>
+        </section>
+
+        <!-- Slide 15 -->
+        <section id="slide15">
+            <h2>Learning in Neural Networks</h2>
+            <img src="slides/slide_15.png" alt="Neural network diagram with formulas explaining weight learning and an illustration of gradient descent landscape.">
+            <p>
+                Training a neural network means adjusting its weights and biases so that the model makes accurate predictions.
+                This is typically done by defining a loss function – for example, the mean squared error for regression – and
+                minimising it via <em>gradient descent</em>.  The gradient tells us how to adjust each weight to reduce the loss.
+                Backpropagation efficiently computes these gradients by applying the chain rule through the layers of the network.
+            </p>
+            <p>
+                The colourful surface on the right illustrates a loss landscape.  Starting from some initial point, gradient descent
+                follows the steepest downward direction to reach a minimum.  However, the path taken depends on the choice of
+                learning rate and the shape of the surface.
+            </p>
+        </section>
+
+        <!-- Slide 16 -->
+        <section id="slide16">
+            <h2>Challenges in Learning</h2>
+            <img src="slides/slide_16.png" alt="Plots illustrating the effect of learning rate on convergence; bullet text about challenges in selecting learning rate.">
+            <p>
+                A key hyper‑parameter in gradient descent is the <strong>learning rate</strong> α.  If α is set too large, the algorithm may
+                overshoot the minimum and diverge.  If α is too small, convergence will be slow and may get stuck in
+                undesirable local minima.  Choosing a suitable learning rate often requires experimentation.
+            </p>
+            <p>
+                Use the slider below to explore how the learning rate affects the gradient descent path on the simple function
+                \(J(w) = w^2\).  Observe how large step sizes overshoot the minimum whereas small step sizes move slowly toward
+                the optimum.
+            </p>
+            <!-- Interactive gradient descent demo -->
+            <div class="demo">
+                <canvas id="gdChart" width="600" height="350" aria-label="Interactive gradient descent chart" role="img"></canvas>
+                <div class="controls">
+                    <label for="lrSlider">Learning rate (α): <span id="lrValue">0.2</span></label>
+                    <input type="range" id="lrSlider" min="0.01" max="1.0" step="0.01" value="0.2">
+                </div>
+            </div>
+            <details>
+                <summary>Why is choosing α hard?</summary>
+                <p>
+                    Real‑world loss landscapes are rarely simple bowls like the one pictured.  They often contain many local minima
+                    and saddle points.  Adaptive optimisation algorithms such as Adam and RMSprop adjust the effective learning
+                    rate during training, helping to navigate these complex surfaces.
+                </p>
+            </details>
+        </section>
+
+        <!-- Slide 17 -->
+        <section id="slide17">
+            <h2>Neural Network Variants</h2>
+            <img src="slides/slide_17.png" alt="Chart of various neural network architectures including feedforward, recurrent, convolutional, and others.">
+            <p>
+                Beyond simple feed‑forward networks, researchers have developed many specialised architectures to tackle different
+                types of data:
+            </p>
+            <ul>
+                <li><strong>Convolutional Neural Networks (CNNs)</strong> – excel at processing images by exploiting the local
+                    correlation in pixels.  They use filters that slide over the input to detect features such as edges and textures.</li>
+                <li><strong>Recurrent Neural Networks (RNNs)</strong> – incorporate cycles that allow information to persist, making them suitable
+                    for sequence data like speech and text.  Variants such as LSTMs and GRUs address the vanishing‑gradient
+                    problem.</li>
+                <li><strong>Autoencoders</strong> – learn to compress data into a lower‑dimensional representation and then reconstruct the input.
+                    They are useful for unsupervised learning and dimensionality reduction.</li>
+                <li><strong>Generative models</strong> such as <em>GANs</em> and <em>variational autoencoders</em> – learn to generate new samples
+                    resembling the training data.</li>
+                <li><strong>Attention and transformer models</strong> – allow the network to focus on different parts of the input when making
+                    predictions.  Transformers underpin state‑of‑the‑art models in natural language processing and, increasingly, vision.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 18 -->
+        <section id="slide18">
+            <h2>Convolutional Neural Networks</h2>
+            <img src="slides/slide_18.png" alt="Diagram of a convolution neural network for digit classification and an illustration of convolution operation.">
+            <p>
+                CNNs are particularly effective for image recognition tasks.  A convolution layer applies a small kernel (filter)
+                across the input image, producing a feature map that highlights certain patterns such as edges.  Pooling layers
+                down‑sample the spatial dimensions, making the network invariant to small translations.  After several
+                convolution and pooling stages, the representation is flattened and passed through fully‑connected layers for
+                classification.
+            </p>
+            <p>
+                The small diagram to the right shows how a 3×3 kernel might slide over a grid of pixel values and produce a
+                single number in the convolved feature map.  Deeper networks learn hierarchical features: early layers detect
+                simple shapes, while later layers combine these into more complex concepts (e.g. facial features or digits).
+            </p>
+            <details>
+                <summary>Interactive CNN visualisations</summary>
+                <p>
+                    There are many excellent online tools to help you build intuition for CNNs.  For example, the
+                    <a href="https://www.cs.ryerson.ca/~aharley/vis/conv/" target="_blank" rel="noopener">Ryerson convolution visualiser</a>
+                    lets you step through the convolution process and see how different filters respond to an image.  Experimenting with
+                    these tools can deepen your understanding of how CNNs work.
+                </p>
+            </details>
+        </section>
+
+        <!-- Slide 19 -->
+        <section id="slide19">
+            <h2>RNNs and LSTMs</h2>
+            <img src="slides/slide_19.png" alt="Diagrams of RNN and LSTM architectures and results of LSTM predictions on time series data.">
+            <p>
+                Standard feed‑forward networks process inputs independently, but many problems involve sequences where previous
+                inputs influence future outputs.  Recurrent Neural Networks introduce feedback connections, allowing information
+                to persist over time.  This makes them well‑suited for language modelling, time‑series forecasting and other
+                sequential tasks.
+            </p>
+            <p>
+                The Long Short‑Term Memory (LSTM) architecture addresses the problem of vanishing gradients by using gating
+                mechanisms that learn to retain or forget information.  The charts on the right show an LSTM predicting future
+                values of a time series: blue points are the actual values and red points are the predictions.
+            </p>
+        </section>
+
+        <!-- Slide 20 -->
+        <section id="slide20">
+            <h2>Trends in ML</h2>
+            <img src="slides/slide_20.png" alt="Slide title for trends in ML.">
+            <p>
+                Machine learning is a rapidly evolving field.  The final section of the lecture highlights some of the exciting
+                directions that researchers and practitioners are pursuing today.
+            </p>
+        </section>
+
+        <!-- Slide 21 -->
+        <section id="slide21">
+            <h2>Current Trends – Explainability & Calibration</h2>
+            <img src="slides/slide_21.png" alt="Bullet points about explainable machines and predictive calibration/adversarial hardening.">
+            <p>
+                As ML models become more complex, understanding their reasoning becomes harder.  There is a growing movement
+                towards <strong>explainable AI</strong>: developing tools and techniques that make neural networks more transparent so that
+                scientists, engineers and policymakers can trust their outputs and diagnose errors.
+            </p>
+            <p>
+                Another important area is <strong>predictive calibration</strong> and <strong>adversarial robustness</strong>.  Neural networks can be
+                overly confident even when wrong, and they can be manipulated by carefully crafted perturbations.  Research in
+                this area seeks to calibrate probability estimates and harden models against adversarial attacks.
+            </p>
+        </section>
+
+        <!-- Slide 22 -->
+        <section id="slide22">
+            <h2>Current Trends – GANs & Attention</h2>
+            <img src="slides/slide_22.png" alt="Bullet points and diagrams introducing generative adversarial networks, deep neural networks, and attention networks.">
+            <p>
+                Two particularly influential ideas in recent years are <strong>Generative Adversarial Networks (GANs)</strong> and
+                <strong>attention mechanisms</strong>.
+            </p>
+            <ul>
+                <li><strong>GANs</strong> pit a generator network against a discriminator network in a two‑player game.  The generator
+                    learns to produce realistic samples, while the discriminator learns to distinguish between real and fake data.
+                    This adversarial process has led to realistic image synthesis and so‑called “deepfakes”.  The site
+                    <a href="https://thispersondoesnotexist.com/" target="_blank" rel="noopener">thispersondoesnotexist.com</a> shows
+                    synthetic faces generated by a GAN.</li>
+                <li><strong>Attention networks</strong> allow a model to weigh the importance of different parts of the input when making
+                    predictions.  The transformer architecture, which relies solely on attention, has revolutionised natural
+                    language processing and is now being applied to vision tasks as well.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 23 -->
+        <section id="slide23">
+            <h2>Additional Resources</h2>
+            <img src="slides/slide_23.png" alt="List of interactive resources and websites for exploring machine learning concepts.">
+            <p>
+                To explore machine learning further, here are some interactive resources and tools that complement this primer:
+            </p>
+            <ul>
+                <li><a href="https://www.cs.waikato.ac.nz/ml/weka/index.html" target="_blank" rel="noopener">Weka</a> – a collection of machine learning algorithms with a graphical interface.</li>
+                <li><a href="https://poloclub.github.io/ganlab/" target="_blank" rel="noopener">GAN Lab</a> and <a href="https://reiinakano.com/gan-playground/" target="_blank" rel="noopener">GAN Playground</a> – interactive demos for generative adversarial networks.</li>
+                <li><a href="https://playground.tensorflow.org/" target="_blank" rel="noopener">TensorFlow Playground</a> – build and train neural networks in your browser.</li>
+                <li><a href="https://experiments.withgoogle.com/collection/ai" target="_blank" rel="noopener">Google AI Experiments</a> – a collection of playful experiments demonstrating ML concepts.</li>
+                <li><a href="https://cs.stanford.edu/~karpathy/svmjs/demo/" target="_blank" rel="noopener">SVMJS demo</a> – explore linear and non‑linear SVMs interactively.</li>
+                <li><a href="https://www.cs.ryerson.ca/~aharley/vis/conv/" target="_blank" rel="noopener">Convolution visualiser</a> – understand how convolution works.
+                </li>
+                <li><a href="https://convnetplayground.fastforwardlabs.com/#/" target="_blank" rel="noopener">ConvNet Playground</a> – experiment with simple convolutional networks.</li>
+            </ul>
+        </section>
+
+        <!-- Slide 24 -->
+        <section id="slide24">
+            <h2>Addendum</h2>
+            <img src="slides/slide_24.png" alt="Slide title addendum.">
+            <p>
+                The remaining slides provide a short excursion into computer vision, clustering and advanced topics such as the XOR problem and transfer learning.
+            </p>
+        </section>
+
+        <!-- Slide 25 -->
+        <section id="slide25">
+            <h2>What is Object Detection?</h2>
+            <img src="slides/slide_25.png" alt="Images demonstrating classification, localization, object detection, instance segmentation, and pose estimation tasks.">
+            <p>
+                Object detection goes beyond merely recognising <em>what</em> is in an image; it also identifies <em>where</em> those objects are
+                located.  At one end of the spectrum, <strong>image classification</strong> simply assigns a label (e.g. “cat”) to the entire
+                image.  <strong>Classification + localisation</strong> adds a bounding box around the object of interest.  Moving further,
+                <strong>object detection</strong> finds and labels multiple objects.  <strong>Instance segmentation</strong> provides even
+                finer detail by delineating the precise pixels belonging to each object.  <strong>Pose estimation</strong> goes beyond
+                detection to infer the positions of body joints, as illustrated on the right.
+            </p>
+        </section>
+
+        <!-- Slide 26 -->
+        <section id="slide26">
+            <h2>Applications of Object Detection</h2>
+            <img src="slides/slide_26.png" alt="Examples of object detection applications including autonomous vehicles, medical imaging, face recognition, and remote sensing.">
+            <p>
+                Object detection underpins many real‑world applications.  In <strong>autonomous vehicles</strong> it allows the car to detect
+                pedestrians, other vehicles and road signs in real time.  In <strong>medical imaging</strong> it helps radiologists locate
+                anomalies such as tumours.  <strong>Face detection</strong> is widely used in consumer cameras and security systems.  In
+                <strong>remote sensing</strong>, detecting objects in satellite images helps monitor wildlife populations and map
+                infrastructure.
+            </p>
+        </section>
+
+        <!-- Slide 27 -->
+        <section id="slide27">
+            <h2>K‑Means Clustering</h2>
+            <img src="slides/slide_27.png" alt="Scatter plots showing iterations of k-means clustering and bullet text summarizing advantages and disadvantages.">
+            <p>
+                K‑means clustering is a popular unsupervised learning algorithm that partitions data into <em>k</em> clusters.  The algorithm
+                works by iteratively assigning points to the nearest cluster centre and then recomputing the centres as the mean of
+                assigned points.  The plot shows how the clusters evolve over successive iterations.
+            </p>
+            <p>
+                <strong>Advantages</strong>: k‑means is conceptually simple and often provides useful clusterings of data.  It scales well to
+                large datasets.
+            </p>
+            <p>
+                <strong>Disadvantages</strong>: results depend on the initial placement of cluster centres and can be sensitive to feature
+                scaling.  K‑means assumes spherical clusters of similar size and struggles with more complex shapes.
+            </p>
+        </section>
+
+        <!-- Slide 28 -->
+        <section id="slide28">
+            <h2>The XOR Problem</h2>
+            <img src="slides/slide_28.png" alt="Visualisation of the XOR classification problem and screenshot of interactive neural network playground.">
+            <p>
+                The XOR (exclusive OR) problem is a classic example of a pattern that cannot be solved by a simple linear model.
+                Points belonging to the same class lie in diagonally opposite corners of the square.  A single straight line cannot
+                separate the red points from the black points.  This problem motivated the development of multi‑layer neural
+                networks, which can represent non‑linear decision boundaries.
+            </p>
+            <p>
+                One trick to solve XOR is to add an extra feature (e.g. x₁·x₂) so that the classes become linearly separable in the
+                transformed space.  Alternatively, neural networks can learn such transformations automatically when provided with
+                hidden layers.  You can experiment with building networks to solve XOR using the
+                <a href="https://playground.tensorflow.org" target="_blank" rel="noopener">TensorFlow Playground</a>.
+            </p>
+        </section>
+
+        <!-- Slide 29 -->
+        <section id="slide29">
+            <h2>Transfer Learning</h2>
+            <img src="slides/slide_29.png" alt="Diagram showing the concept of transfer learning from a pretrained network to a new task.">
+            <p>
+                Training a deep neural network from scratch requires large amounts of labelled data and computational resources.
+                <strong>Transfer learning</strong> addresses this by reusing a model that has been pretrained on a large dataset, such as
+                ImageNet.  Because early layers learn generic features like edges and textures, they can serve as a solid
+                foundation for new tasks.  The final layers are then fine‑tuned on your specific dataset, resulting in a trained
+                network with far less effort.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Machine Learning Primer • Educational use only.  Built for undergraduate learners.</p>
+    </footer>
+
+    <!-- Load our interactive demo scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
